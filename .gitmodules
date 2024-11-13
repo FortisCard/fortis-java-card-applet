@@ -1,0 +1,6 @@
+[submodule "lib/JCMathLib"]
+	path = lib/JCMathLib
+	url = https://github.com/OpenCryptoProject/JCMathLib.git
+[submodule "lib/sdks"]
+	path = lib/sdks
+	url = https://github.com/martinpaljak/oracle_javacard_sdks

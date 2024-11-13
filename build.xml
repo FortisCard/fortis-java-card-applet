@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="FortisApplet" default="default" basedir=".">
+    <description>Build file for FortisApplet</description>
+
+    <!-- Global properties -->
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <property name="version" value="1.0.0"/>
+
+    <!-- JavaCard SDK properties -->
+    <property environment="env"/>
+    <property name="jc.home" value="lib/sdks/jc304_kit"/>
+
+    <!-- Applet properties -->
+    <property name="applet.package" value="com.fortis"/>
+    <property name="applet.class" value="FortisApplet"/>
+    <property name="package.aid" value="A0010203040501"/>
+    <property name="applet.aid" value="${package.aid}01"/>
+
+    <!-- Main targets -->
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+
+    <target name="init">
+      <mkdir dir="build"/>
+      <get src="https://github.com/martinpaljak/ant-javacard/releases/latest/download/ant-javacard.jar" dest="lib" skipexisting="true"/>
+      <taskdef name="javacard" classname="pro.javacard.ant.JavaCard" classpath="lib/ant-javacard.jar"/>
+    </target>
+
+    <target name="build" depends="init">
+      <javacard>
+        <cap jckit="${jc.home}"
+           aid="${package.aid}"
+           package="${applet.package}"
+           sources="${src}"
+           output="build/fortis-${version}.cap"
+           debug="true">
+          <applet class="${applet.package}.${applet.class}" aid="${applet.aid}"/>
+        </cap>
+      </javacard>
+    </target>
+
+    <target name="default" depends="clean,build"/>
+
+</project>
